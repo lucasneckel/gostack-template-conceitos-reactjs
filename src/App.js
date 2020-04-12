@@ -19,25 +19,25 @@ function App() {
       "url": "http://github.com/lucasneckel/gostack-template-conceitos-nodejs",
       "techs": ["Node.js", "Express", "Cure", "Uuid"]
     });  
-    const repositorie = response.data;
-    setRepositories([...repositories, repositorie]);
+    const repository = response.data;
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
     await api.delete(`repositories/${id}`);
 
-    api.get('repositories').then(response => {
-      setRepositories(response.data);
-    });
+    setRepositories(repositories.filter(
+      repository => repository.id !== id
+    ));
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
-        {repositories.map(repositorie =>
-        <li key={repositorie.id}>
-          {repositorie.title}
-          <button onClick={() => handleRemoveRepository(repositorie.id)}>
+        {repositories.map(repository =>
+        <li key={repository.id}>
+          {repository.title}
+          <button onClick={() => handleRemoveRepository(repository.id)}>
             Remover
           </button>
         </li>)}
